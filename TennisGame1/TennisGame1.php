@@ -29,13 +29,10 @@ class TennisGame1 implements TennisGame
     {
         $score = '';
         if ($this->m_score1 === $this->m_score2) {
-            $score = match ($this->m_score1) {
-                0 => 'Love-All',
-                1 => 'Fifteen-All',
-                2 => 'Thirty-All',
-                default => 'Deuce',
-            };
-        } elseif ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
+            return $this->scoreLabelOfEqualScores();
+        }
+
+        if ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
             $minusResult = $this->m_score1 - $this->m_score2;
             if ($minusResult === 1) {
                 $score = 'Advantage player1';
@@ -71,5 +68,15 @@ class TennisGame1 implements TennisGame
             }
         }
         return $score;
+    }
+
+    private function scoreLabelOfEqualScores(): string
+    {
+        return match ($this->m_score1) {
+            0 => 'Love-All',
+            1 => 'Fifteen-All',
+            2 => 'Thirty-All',
+            default => 'Deuce',
+        };
     }
 }
