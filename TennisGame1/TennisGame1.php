@@ -33,38 +33,29 @@ class TennisGame1 implements TennisGame
         }
 
         if ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
-            $minusResult = $this->m_score1 - $this->m_score2;
-            if ($minusResult === 1) {
-                $score = 'Advantage player1';
-            } elseif ($minusResult === -1) {
-                $score = 'Advantage player2';
-            } elseif ($minusResult >= 2) {
-                $score = 'Win for player1';
+            return $this->handleScoreMoreThanOrEqualToFour();
+        }
+
+        for ($i = 1; $i < 3; $i++) {
+            if ($i === 1) {
+                $tempScore = $this->m_score1;
             } else {
-                $score = 'Win for player2';
+                $score .= '-';
+                $tempScore = $this->m_score2;
             }
-        } else {
-            for ($i = 1; $i < 3; $i++) {
-                if ($i === 1) {
-                    $tempScore = $this->m_score1;
-                } else {
-                    $score .= '-';
-                    $tempScore = $this->m_score2;
-                }
-                switch ($tempScore) {
-                    case 0:
-                        $score .= 'Love';
-                        break;
-                    case 1:
-                        $score .= 'Fifteen';
-                        break;
-                    case 2:
-                        $score .= 'Thirty';
-                        break;
-                    case 3:
-                        $score .= 'Forty';
-                        break;
-                }
+            switch ($tempScore) {
+                case 0:
+                    $score .= 'Love';
+                    break;
+                case 1:
+                    $score .= 'Fifteen';
+                    break;
+                case 2:
+                    $score .= 'Thirty';
+                    break;
+                case 3:
+                    $score .= 'Forty';
+                    break;
             }
         }
         return $score;
@@ -78,5 +69,20 @@ class TennisGame1 implements TennisGame
             2 => 'Thirty-All',
             default => 'Deuce',
         };
+    }
+
+    private function handleScoreMoreThanOrEqualToFour(): string
+    {
+        $minusResult = $this->m_score1 - $this->m_score2;
+        if ($minusResult === 1) {
+            $score = 'Advantage player1';
+        } elseif ($minusResult === -1) {
+            $score = 'Advantage player2';
+        } elseif ($minusResult >= 2) {
+            $score = 'Win for player1';
+        } else {
+            $score = 'Win for player2';
+        }
+        return $score;
     }
 }
