@@ -87,20 +87,11 @@ class TennisGame1 implements TennisGame
 
     private function getScoreLabelBasedOnScore(mixed $tempScore, string $score): string
     {
-        switch ($tempScore) {
-            case 0:
-                $score .= 'Love';
-                break;
-            case 1:
-                $score .= 'Fifteen';
-                break;
-            case 2:
-                $score .= 'Thirty';
-                break;
-            case 3:
-                $score .= 'Forty';
-                break;
-        }
-        return $score;
+        return match ($tempScore) {
+            0 => $score . 'Love',
+            1 => $score . 'Fifteen',
+            2 => $score . 'Thirty',
+            3 => $score . 'Forty',
+        };
     }
 }
