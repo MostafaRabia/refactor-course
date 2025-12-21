@@ -64,12 +64,8 @@ class TennisGame1 implements TennisGame
         $score = '';
 
         for ($i = 1; $i < 3; $i++) {
-            if ($i === 1) {
-                $tempScore = $this->m_score1;
-            } else {
-                $score .= '-';
-                $tempScore = $this->m_score2;
-            }
+            [$tempScore, $score] = $this->appendToScore($i, $score);
+
             switch ($tempScore) {
                 case 0:
                     $score .= 'Love';
@@ -86,5 +82,19 @@ class TennisGame1 implements TennisGame
             }
         }
         return $score;
+    }
+
+    private function appendToScore(int $i, string $score): array
+    {
+        if ($i === 1) {
+            $tempScore = $this->m_score1;
+
+            return [$tempScore, $score];
+        }
+
+        $score .= '-';
+        $tempScore = $this->m_score2;
+
+        return [$tempScore, $score];
     }
 }
