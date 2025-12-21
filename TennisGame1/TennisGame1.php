@@ -27,7 +27,6 @@ class TennisGame1 implements TennisGame
 
     public function getScore(): string
     {
-        $score = '';
         if ($this->m_score1 === $this->m_score2) {
             return $this->scoreLabelOfEqualScores();
         }
@@ -35,6 +34,34 @@ class TennisGame1 implements TennisGame
         if ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
             return $this->handleScoreMoreThanOrEqualToFour();
         }
+
+        return $this->handleLoop();
+    }
+
+    private function scoreLabelOfEqualScores(): string
+    {
+        return match ($this->m_score1) {
+            0 => 'Love-All',
+            1 => 'Fifteen-All',
+            2 => 'Thirty-All',
+            default => 'Deuce',
+        };
+    }
+
+    private function handleScoreMoreThanOrEqualToFour(): string
+    {
+        $minusResult = $this->m_score1 - $this->m_score2;
+
+        return match ($minusResult) {
+            1 => 'Advantage player1',
+            -1 => 'Advantage player2',
+            default => $minusResult >= 2 ? 'Win for player1' : 'Win for player2',
+        };
+    }
+
+    private function handleLoop(): string
+    {
+        $score = '';
 
         for ($i = 1; $i < 3; $i++) {
             if ($i === 1) {
@@ -59,26 +86,5 @@ class TennisGame1 implements TennisGame
             }
         }
         return $score;
-    }
-
-    private function scoreLabelOfEqualScores(): string
-    {
-        return match ($this->m_score1) {
-            0 => 'Love-All',
-            1 => 'Fifteen-All',
-            2 => 'Thirty-All',
-            default => 'Deuce',
-        };
-    }
-
-    private function handleScoreMoreThanOrEqualToFour(): string
-    {
-        $minusResult = $this->m_score1 - $this->m_score2;
-
-        return match ($minusResult) {
-            1 => 'Advantage player1',
-            -1 => 'Advantage player2',
-            default => $minusResult >= 2 ? 'Win for player1' : 'Win for player2',
-        };
     }
 }
