@@ -74,15 +74,11 @@ class TennisGame1 implements TennisGame
     private function handleScoreMoreThanOrEqualToFour(): string
     {
         $minusResult = $this->m_score1 - $this->m_score2;
-        if ($minusResult === 1) {
-            $score = 'Advantage player1';
-        } elseif ($minusResult === -1) {
-            $score = 'Advantage player2';
-        } elseif ($minusResult >= 2) {
-            $score = 'Win for player1';
-        } else {
-            $score = 'Win for player2';
-        }
-        return $score;
+
+        return match ($minusResult) {
+            1 => 'Advantage player1',
+            -1 => 'Advantage player2',
+            default => $minusResult >= 2 ? 'Win for player1' : 'Win for player2',
+        };
     }
 }
