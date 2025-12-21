@@ -8,6 +8,20 @@ use Base\TennisGame;
 
 class TennisGame1 implements TennisGame
 {
+    // We could move it to enums, but here for simplicity
+    public const LOVE_ALL = 'Love-All';
+    public const FIFTEEN_ALL = 'Fifteen-All';
+    public const THIRTY_ALL = 'Thirty-All';
+    public const DEUCE = 'Deuce';
+    public const ADVANTAGE_PLAYER_1 = 'Advantage player1';
+    public const ADVANTAGE_PLAYER_2 = 'Advantage player2';
+    public const WIN_FOR_PLAYER_1 = 'Win for player1';
+    public const WIN_FOR_PLAYER_2 = 'Win for player2';
+    public const LOVE = 'Love';
+    public const FIFTEEN = 'Fifteen';
+    public const THIRTY = 'Thirty';
+    public const FORTY = 'Forty';
+
     private int $m_score1 = 0;
 
     private int $m_score2 = 0;
@@ -41,10 +55,10 @@ class TennisGame1 implements TennisGame
     private function getScoreLabelOfEqualScores(): string
     {
         return match ($this->m_score1) {
-            0 => 'Love-All',
-            1 => 'Fifteen-All',
-            2 => 'Thirty-All',
-            default => 'Deuce',
+            0 => self::LOVE_ALL,
+            1 => self::FIFTEEN_ALL,
+            2 => self::THIRTY_ALL,
+            default => self::DEUCE,
         };
     }
 
@@ -53,9 +67,9 @@ class TennisGame1 implements TennisGame
         $minusResult = $this->m_score1 - $this->m_score2;
 
         return match ($minusResult) {
-            1 => 'Advantage player1',
-            -1 => 'Advantage player2',
-            default => $minusResult >= 2 ? 'Win for player1' : 'Win for player2',
+            1 => self::ADVANTAGE_PLAYER_1,
+            -1 => self::ADVANTAGE_PLAYER_2,
+            default => $minusResult >= 2 ? self::WIN_FOR_PLAYER_1 : self::WIN_FOR_PLAYER_2,
         };
     }
 
@@ -89,10 +103,10 @@ class TennisGame1 implements TennisGame
     private function getScoreLabelBasedOnScore(mixed $tempScore, string $score): string
     {
         return match ($tempScore) {
-            0 => $score . 'Love',
-            1 => $score . 'Fifteen',
-            2 => $score . 'Thirty',
-            3 => $score . 'Forty',
+            0 => $score . self::LOVE,
+            1 => $score . self::FIFTEEN,
+            2 => $score . self::THIRTY,
+            3 => $score . self::FORTY,
         };
     }
 }
