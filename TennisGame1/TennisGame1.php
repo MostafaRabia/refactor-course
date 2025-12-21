@@ -28,17 +28,17 @@ class TennisGame1 implements TennisGame
     public function getScore(): string
     {
         if ($this->m_score1 === $this->m_score2) {
-            return $this->scoreLabelOfEqualScores();
+            return $this->getScoreLabelOfEqualScores();
         }
 
         if ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
-            return $this->handleScoreMoreThanOrEqualToFour();
+            return $this->getScoreLabelForScoreThatMoreThanOrEqualToFour();
         }
 
         return $this->handleLoop();
     }
 
-    private function scoreLabelOfEqualScores(): string
+    private function getScoreLabelOfEqualScores(): string
     {
         return match ($this->m_score1) {
             0 => 'Love-All',
@@ -48,7 +48,7 @@ class TennisGame1 implements TennisGame
         };
     }
 
-    private function handleScoreMoreThanOrEqualToFour(): string
+    private function getScoreLabelForScoreThatMoreThanOrEqualToFour(): string
     {
         $minusResult = $this->m_score1 - $this->m_score2;
 
@@ -68,6 +68,7 @@ class TennisGame1 implements TennisGame
 
             $score = $this->getScoreLabelBasedOnScore($tempScore, $score);
         }
+
         return $score;
     }
 
