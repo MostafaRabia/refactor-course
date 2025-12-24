@@ -33,7 +33,7 @@ class TennisGame2 implements TennisGame
 
         $score = $this->handleWin($score);
 
-        $score = $this->handlePointsLessThan4AndNotEqual($score);
+        $score = $this->handleAnotherCases($score);
 
         return $score;
     }
@@ -92,7 +92,7 @@ class TennisGame2 implements TennisGame
         };
     }
 
-    private function handlePointsLessThan4AndNotEqual(string $score): string
+    private function handleAnotherCases(string $score): string
     {
         if (!empty($score)) {
             return $score;
