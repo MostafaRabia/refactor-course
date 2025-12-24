@@ -31,13 +31,7 @@ class TennisGame2 implements TennisGame
 
         $score = $this->handlePointsLessThan4AndNotEqual($score);
 
-        if ($this->P1point > $this->P2point && $this->P2point >= 3) {
-            $score = 'Advantage player1';
-        }
-
-        if ($this->P2point > $this->P1point && $this->P1point >= 3) {
-            $score = 'Advantage player2';
-        }
+        $score = $this->handleAdvantage($score);
 
         if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2) {
             $score = 'Win for player1';
@@ -127,5 +121,17 @@ class TennisGame2 implements TennisGame
         };
 
         return "{$this->P1res}-{$this->P2res}";
+    }
+
+    private function handleAdvantage(string $score): string
+    {
+        if ($this->P1point > $this->P2point && $this->P2point >= 3) {
+            $score = 'Advantage player1';
+        }
+
+        if ($this->P2point > $this->P1point && $this->P1point >= 3) {
+            $score = 'Advantage player2';
+        }
+        return $score;
     }
 }
