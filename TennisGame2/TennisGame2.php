@@ -125,13 +125,10 @@ class TennisGame2 implements TennisGame
 
     private function handleAdvantage(string $score): string
     {
-        if ($this->P1point > $this->P2point && $this->P2point >= 3) {
-            $score = 'Advantage player1';
-        }
-
-        if ($this->P2point > $this->P1point && $this->P1point >= 3) {
-            $score = 'Advantage player2';
-        }
-        return $score;
+        return match (true) {
+            $this->P1point > $this->P2point && $this->P2point >= 3 => 'Advantage player1',
+            $this->P2point > $this->P1point && $this->P1point >= 3 => 'Advantage player2',
+            default => $score,
+        };
     }
 }
