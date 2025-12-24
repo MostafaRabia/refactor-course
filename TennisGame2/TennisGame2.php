@@ -29,11 +29,11 @@ class TennisGame2 implements TennisGame
 
         $score = $this->handleEqualAndMoreThanOrEqualThree($score);
 
-        $score = $this->handlePointsLessThan4AndNotEqual($score);
-
         $score = $this->handleAdvantage($score);
 
         $score = $this->handleWin($score);
+
+        $score = $this->handlePointsLessThan4AndNotEqual($score);
 
         return $score;
     }
