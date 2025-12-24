@@ -150,16 +150,10 @@ class TennisGame2 implements TennisGame
             return $score;
         }
 
-        if ($this->P1point === 0) {
-            $score = 'Love';
-        }
-        if ($this->P1point === 1) {
-            $score = 'Fifteen';
-        }
-        if ($this->P1point === 2) {
-            $score = 'Thirty';
-        }
-        $score .= '-All';
-        return $score;
+        return match ($this->P1point) {
+            0 => 'Love',
+            1 => 'Fifteen',
+            2 => 'Thirty',
+        }.'-All';
     }
 }
