@@ -157,9 +157,9 @@ class TennisGame2 implements TennisGame
 
     private function handleEqualAndMoreThanOrEqualThree(string $score): string
     {
-        if ($this->P1point === $this->P2point && $this->P1point >= 3) {
-            $score = 'Deuce';
-        }
-        return $score;
+        return match (true) {
+            $this->P1point === $this->P2point && $this->P1point >= 3 => 'Deuce',
+            default => $score,
+        };
     }
 }
