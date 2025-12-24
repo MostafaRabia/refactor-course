@@ -25,18 +25,7 @@ class TennisGame2 implements TennisGame
     public function getScore(): string
     {
         $score = '';
-        if ($this->P1point === $this->P2point && $this->P1point < 4) {
-            if ($this->P1point === 0) {
-                $score = 'Love';
-            }
-            if ($this->P1point === 1) {
-                $score = 'Fifteen';
-            }
-            if ($this->P1point === 2) {
-                $score = 'Thirty';
-            }
-            $score .= '-All';
-        }
+        $score = $this->handleEqualAndLessThan3($score);
 
         if ($this->P1point === $this->P2point && $this->P1point >= 3) {
             $score = 'Deuce';
@@ -153,5 +142,22 @@ class TennisGame2 implements TennisGame
     private function P2Score(): void
     {
         $this->P2point++;
+    }
+
+    private function handleEqualAndLessThan3(string $score): string
+    {
+        if ($this->P1point === $this->P2point && $this->P1point < 3) {
+            if ($this->P1point === 0) {
+                $score = 'Love';
+            }
+            if ($this->P1point === 1) {
+                $score = 'Fifteen';
+            }
+            if ($this->P1point === 2) {
+                $score = 'Thirty';
+            }
+            $score .= '-All';
+        }
+        return $score;
     }
 }
