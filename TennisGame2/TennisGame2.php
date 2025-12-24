@@ -43,20 +43,6 @@ class TennisGame2 implements TennisGame
         $player === 'player1' ? $this->P1Score() : $this->P2Score();
     }
 
-    private function SetP1Score(int $number): void
-    {
-        for ($i = 0; $i < $number; $i++) {
-            $this->P1Score();
-        }
-    }
-
-    private function SetP2Score(int $number): void
-    {
-        for ($i = 0; $i < $number; $i++) {
-            $this->P2Score();
-        }
-    }
-
     private function P1Score(): void
     {
         $this->P1point++;
