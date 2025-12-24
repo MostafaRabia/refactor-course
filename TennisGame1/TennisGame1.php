@@ -8,6 +8,20 @@ use Base\TennisGame;
 
 class TennisGame1 implements TennisGame
 {
+    // We could move it to enums, but here for simplicity
+    public const LOVE_ALL = 'Love-All';
+    public const FIFTEEN_ALL = 'Fifteen-All';
+    public const THIRTY_ALL = 'Thirty-All';
+    public const DEUCE = 'Deuce';
+    public const ADVANTAGE_PLAYER_1 = 'Advantage player1';
+    public const ADVANTAGE_PLAYER_2 = 'Advantage player2';
+    public const WIN_FOR_PLAYER_1 = 'Win for player1';
+    public const WIN_FOR_PLAYER_2 = 'Win for player2';
+    public const LOVE = 'Love';
+    public const FIFTEEN = 'Fifteen';
+    public const THIRTY = 'Thirty';
+    public const FORTY = 'Forty';
+
     private int $m_score1 = 0;
 
     private int $m_score2 = 0;
@@ -20,58 +34,79 @@ class TennisGame1 implements TennisGame
 
     public function wonPoint(string $playerName): void
     {
-        if ($playerName === 'player1') {
-            $this->m_score1++;
-        } else {
-            $this->m_score2++;
-        }
+        $playerName === $this->player1Name
+            ? $this->m_score1++
+            : $this->m_score2++;
     }
 
     public function getScore(): string
     {
-        $score = '';
         if ($this->m_score1 === $this->m_score2) {
-            $score = match ($this->m_score1) {
-                0 => 'Love-All',
-                1 => 'Fifteen-All',
-                2 => 'Thirty-All',
-                default => 'Deuce',
-            };
-        } elseif ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
-            $minusResult = $this->m_score1 - $this->m_score2;
-            if ($minusResult === 1) {
-                $score = 'Advantage player1';
-            } elseif ($minusResult === -1) {
-                $score = 'Advantage player2';
-            } elseif ($minusResult >= 2) {
-                $score = 'Win for player1';
-            } else {
-                $score = 'Win for player2';
-            }
-        } else {
-            for ($i = 1; $i < 3; $i++) {
-                if ($i === 1) {
-                    $tempScore = $this->m_score1;
-                } else {
-                    $score .= '-';
-                    $tempScore = $this->m_score2;
-                }
-                switch ($tempScore) {
-                    case 0:
-                        $score .= 'Love';
-                        break;
-                    case 1:
-                        $score .= 'Fifteen';
-                        break;
-                    case 2:
-                        $score .= 'Thirty';
-                        break;
-                    case 3:
-                        $score .= 'Forty';
-                        break;
-                }
-            }
+            return $this->getScoreLabelOfEqualScores();
         }
+
+        if ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
+            return $this->getScoreLabelForScoreThatMoreThanOrEqualToFour();
+        }
+
+        return $this->handleLoop();
+    }
+
+    private function getScoreLabelOfEqualScores(): string
+    {
+        return match ($this->m_score1) {
+            0 => self::LOVE_ALL,
+            1 => self::FIFTEEN_ALL,
+            2 => self::THIRTY_ALL,
+            default => self::DEUCE,
+        };
+    }
+
+    private function getScoreLabelForScoreThatMoreThanOrEqualToFour(): string
+    {
+        $minusResult = $this->m_score1 - $this->m_score2;
+
+        return match ($minusResult) {
+            1 => self::ADVANTAGE_PLAYER_1,
+            -1 => self::ADVANTAGE_PLAYER_2,
+            default => $minusResult >= 2 ? self::WIN_FOR_PLAYER_1 : self::WIN_FOR_PLAYER_2,
+        };
+    }
+
+    private function handleLoop(): string
+    {
+        $score = '';
+
+        for ($i = 1; $i < 3; $i++) {
+            [$tempScore, $score] = $this->appendToScore($i, $score);
+
+            $score = $this->getScoreLabelBasedOnScore($tempScore, $score);
+        }
+
         return $score;
+    }
+
+    private function appendToScore(int $i, string $score): array
+    {
+        if ($i === 1) {
+            $tempScore = $this->m_score1;
+
+            return [$tempScore, $score];
+        }
+
+        $score .= '-';
+        $tempScore = $this->m_score2;
+
+        return [$tempScore, $score];
+    }
+
+    private function getScoreLabelBasedOnScore(mixed $tempScore, string $score): string
+    {
+        return match ($tempScore) {
+            0 => $score . self::LOVE,
+            1 => $score . self::FIFTEEN,
+            2 => $score . self::THIRTY,
+            3 => $score . self::FORTY,
+        };
     }
 }
