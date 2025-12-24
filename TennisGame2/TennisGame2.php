@@ -128,13 +128,10 @@ class TennisGame2 implements TennisGame
 
     private function handleWin(string $score): string
     {
-        if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2) {
-            $score = 'Win for player1';
-        }
-
-        if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2) {
-            $score = 'Win for player2';
-        }
-        return $score;
+        return match (true) {
+            $this->P1point >= 4 && $this->P1point - $this->P2point >= 2 => 'Win for player1',
+            $this->P2point >= 4 && $this->P2point - $this->P1point >= 2 => 'Win for player2',
+            default => $score,
+        };
     }
 }
