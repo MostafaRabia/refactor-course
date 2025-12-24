@@ -27,9 +27,7 @@ class TennisGame2 implements TennisGame
         $score = '';
         $score = $this->handleEqualAndLessThan3($score);
 
-        if ($this->P1point === $this->P2point && $this->P1point >= 3) {
-            $score = 'Deuce';
-        }
+        $score = $this->handleEqualAndMoreThanOrEqualThree($score);
 
         if ($this->P1point > 0 && $this->P2point === 0) {
             if ($this->P1point === 1) {
@@ -155,5 +153,13 @@ class TennisGame2 implements TennisGame
             1 => 'Fifteen',
             2 => 'Thirty',
         }.'-All';
+    }
+
+    private function handleEqualAndMoreThanOrEqualThree(string $score): string
+    {
+        if ($this->P1point === $this->P2point && $this->P1point >= 3) {
+            $score = 'Deuce';
+        }
+        return $score;
     }
 }
