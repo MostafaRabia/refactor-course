@@ -26,9 +26,7 @@ class ExpenseReport {
         $total = 0;
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
-        foreach ($expenses as $expense) {
-            $mealExpenses = $this->getMealExpenses($expense, $mealExpenses);
-        }
+        $mealExpenses = $this->getTotalOfMealExpenses($expenses, $mealExpenses);
 
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
@@ -68,6 +66,14 @@ class ExpenseReport {
     {
         if (in_array($expense->type, [ExpenseType::DINNER, ExpenseType::BREAKFAST], true)) {
             $mealExpenses += $expense->amount;
+        }
+        return $mealExpenses;
+    }
+
+    private function getTotalOfMealExpenses($expenses, mixed $mealExpenses): mixed
+    {
+        foreach ($expenses as $expense) {
+            $mealExpenses = $this->getMealExpenses($expense, $mealExpenses);
         }
         return $mealExpenses;
     }
