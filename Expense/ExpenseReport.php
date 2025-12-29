@@ -29,7 +29,7 @@ class ExpenseReport {
             }
             $expenseName = $this->getExpenseName($expense);
 
-            $mealOverExpensesMarker = $expense->type == ExpenseType::DINNER && $expense->amount > 5000 || $expense->type == ExpenseType::BREAKFAST && $expense->amount > 1000 ? "X" : " ";
+            $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
             print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
             $total += $expense->amount;
         }
@@ -45,5 +45,10 @@ class ExpenseReport {
             ExpenseType::CAR_RENTAL => "Car Rental",
             default => "",
         };
+    }
+
+    private function addXIfLimitExceeded(mixed $expense): string
+    {
+        return $expense->type == ExpenseType::DINNER && $expense->amount > 5000 || $expense->type == ExpenseType::BREAKFAST && $expense->amount > 1000 ? "X" : " ";
     }
 }
