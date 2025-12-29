@@ -23,11 +23,10 @@ class ExpenseReport {
 
     function print_report($expenses) {
         $mealExpenses = $this->getTotalOfMealExpenses($expenses);
-        $total = 0;
+        $total = $this->getTotal($expenses);
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
 
-        $total = $this->getTotal($expenses);
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
             $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
