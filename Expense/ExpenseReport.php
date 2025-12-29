@@ -30,7 +30,7 @@ class ExpenseReport {
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
             $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
-            print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
+            $this->print($expenseName, $expense, $mealOverExpensesMarker);
         }
         print("Meal Expenses: " . $mealExpenses . "\n");
         print("Total Expenses: " . $total . "\n");
@@ -83,5 +83,10 @@ class ExpenseReport {
             $total += $expense->amount;
         }
         return $total;
+    }
+
+    private function print(string $expenseName, mixed $expense, string $mealOverExpensesMarker): void
+    {
+        print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
     }
 }
