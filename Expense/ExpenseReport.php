@@ -76,7 +76,7 @@ class ExpenseReport {
         return $mealExpenses;
     }
 
-    private function getTotal($expenses): mixed
+    private function getTotal($expenses): int
     {
         $total = 0;
         foreach ($expenses as $expense) {
