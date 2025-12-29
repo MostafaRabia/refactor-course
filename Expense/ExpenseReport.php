@@ -37,7 +37,7 @@ class ExpenseReport {
         print("Total Expenses: " . $total . "\n");
     }
 
-    private function getExpenseName(mixed $expense): string
+    private function getExpenseName(Expense $expense): string
     {
         return match ($expense->type) {
             ExpenseType::DINNER => "Dinner",
