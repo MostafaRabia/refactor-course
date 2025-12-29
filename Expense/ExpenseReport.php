@@ -63,7 +63,7 @@ class ExpenseReport {
 
     private function getMealExpenses(Expense $expense, int $mealExpenses): int
     {
-        if ($expense->type == ExpenseType::DINNER || $expense->type == ExpenseType::BREAKFAST) {
+        if (in_array($expense->type, [ExpenseType::DINNER, ExpenseType::BREAKFAST], true)) {
             $mealExpenses += $expense->amount;
         }
         return $mealExpenses;
