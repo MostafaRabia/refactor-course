@@ -27,9 +27,7 @@ class ExpenseReport {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
         foreach ($expenses as $expense) {
-            if ($expense->type == ExpenseType::DINNER || $expense->type == ExpenseType::BREAKFAST) {
-                $mealExpenses += $expense->amount;
-            }
+            $mealExpenses = $this->getMealExpenses($expense, $mealExpenses);
             $expenseName = $this->getExpenseName($expense);
 
             $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
@@ -61,5 +59,13 @@ class ExpenseReport {
             )
             ? "X"
             : " ";
+    }
+
+    private function getMealExpenses(mixed $expense, $mealExpenses): mixed
+    {
+        if ($expense->type == ExpenseType::DINNER || $expense->type == ExpenseType::BREAKFAST) {
+            $mealExpenses += $expense->amount;
+        }
+        return $mealExpenses;
     }
 }
