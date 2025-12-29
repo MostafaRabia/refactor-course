@@ -27,7 +27,7 @@ class ExpenseReport {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
 
-        $total = $this->getTotal($expenses, $total);
+        $total = $this->getTotal($expenses);
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
             $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
@@ -77,8 +77,9 @@ class ExpenseReport {
         return $mealExpenses;
     }
 
-    private function getTotal($expenses, $total): mixed
+    private function getTotal($expenses): mixed
     {
+        $total = 0;
         foreach ($expenses as $expense) {
             $total += $expense->amount;
         }
