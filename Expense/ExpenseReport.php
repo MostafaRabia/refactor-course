@@ -47,7 +47,7 @@ class ExpenseReport {
         };
     }
 
-    private function addXIfLimitExceeded(mixed $expense): string
+    private function addXIfLimitExceeded(Expense $expense): string
     {
         return $expense->type == ExpenseType::DINNER && $expense->amount > 5000 || $expense->type == ExpenseType::BREAKFAST && $expense->amount > 1000 ? "X" : " ";
     }
