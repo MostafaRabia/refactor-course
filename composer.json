@@ -22,7 +22,8 @@
       "Tests\\": "tests/",
       "Base\\": "Base/",
       "TennisGame1\\": "TennisGame1/",
-      "TennisGame2\\": "TennisGame2/"
+      "TennisGame2\\": "TennisGame2/",
+      "Expense\\": "Expense/"
     }
   },
   "scripts": {

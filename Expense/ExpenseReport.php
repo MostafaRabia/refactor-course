@@ -1,5 +1,7 @@
 <?php
 
+namespace Expense;
+
 abstract class ExpenseType {
     const DINNER = 1;
     const BREAKFAST = 2;
