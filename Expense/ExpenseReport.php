@@ -22,11 +22,10 @@ class ExpenseReport {
     const BREAKFAST_LIMIT = 1000;
 
     function print_report($expenses) {
-        $mealExpenses = 0;
+        $mealExpenses = $this->getTotalOfMealExpenses($expenses);
         $total = 0;
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
-        $mealExpenses = $this->getTotalOfMealExpenses($expenses);
 
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
