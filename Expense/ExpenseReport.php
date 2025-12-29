@@ -24,12 +24,7 @@ class ExpenseReport {
     function print_report($expenses) {
         $mealExpenses = $this->getTotalOfMealExpenses($expenses);
         $total = $this->getTotal($expenses);
-        $date = date("Y-m-d h:i:sa");
-        print("Expense Report {$date}\n");
-
-        $this->printAllExpenses($expenses);
-        print("Meal Expenses: " . $mealExpenses . "\n");
-        print("Total Expenses: " . $total . "\n");
+        $this->printReportInTxt($expenses, $mealExpenses, $total);
     }
 
     private function getExpenseName(Expense $expense): string
@@ -94,5 +89,14 @@ class ExpenseReport {
         foreach ($expenses as $expense) {
             $this->print($expense);
         }
+    }
+
+    private function printReportInTxt($expenses, int $mealExpenses, int $total): void
+    {
+        $date = date("Y-m-d h:i:sa");
+        print("Expense Report {$date}\n");
+        $this->printAllExpenses($expenses);
+        print("Meal Expenses: " . $mealExpenses . "\n");
+        print("Total Expenses: " . $total . "\n");
     }
 }
