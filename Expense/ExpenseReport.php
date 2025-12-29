@@ -19,6 +19,7 @@ class Expense {
 
 class ExpenseReport {
     const DINEER_LIMIT = 5000;
+    const BREAKFAST_LIMIT = 1000;
 
     function print_report($expenses) {
         $mealExpenses = 0;
@@ -56,7 +57,7 @@ class ExpenseReport {
                 && $expense->amount > self::DINEER_LIMIT
             ) || (
                 $expense->type == ExpenseType::BREAKFAST
-                && $expense->amount > 1000
+                && $expense->amount > self::BREAKFAST_LIMIT
             )
             ? "X"
             : " ";
