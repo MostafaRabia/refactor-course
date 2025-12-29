@@ -39,18 +39,11 @@ class ExpenseReport {
 
     private function getExpenseName(mixed $expense): string
     {
-        $expenseName = "";
-        switch ($expense->type) {
-            case ExpenseType::DINNER:
-                $expenseName = "Dinner";
-                break;
-            case ExpenseType::BREAKFAST:
-                $expenseName = "Breakfast";
-                break;
-            case ExpenseType::CAR_RENTAL:
-                $expenseName = "Car Rental";
-                break;
-        }
-        return $expenseName;
+        return match ($expense->type) {
+            ExpenseType::DINNER => "Dinner",
+            ExpenseType::BREAKFAST => "Breakfast",
+            ExpenseType::CAR_RENTAL => "Car Rental",
+            default => "",
+        };
     }
 }
