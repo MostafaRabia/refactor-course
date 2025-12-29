@@ -28,8 +28,6 @@ class ExpenseReport {
         print("Expense Report {$date}\n");
 
         foreach ($expenses as $expense) {
-            $expenseName = $this->getExpenseName($expense);
-            $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
             $this->print($expense);
         }
         print("Meal Expenses: " . $mealExpenses . "\n");
