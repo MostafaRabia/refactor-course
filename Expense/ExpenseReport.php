@@ -61,7 +61,7 @@ class ExpenseReport {
             : " ";
     }
 
-    private function getMealExpenses(mixed $expense, $mealExpenses): mixed
+    private function getMealExpenses(Expense $expense, $mealExpenses): mixed
     {
         if ($expense->type == ExpenseType::DINNER || $expense->type == ExpenseType::BREAKFAST) {
             $mealExpenses += $expense->amount;
