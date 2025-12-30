@@ -47,7 +47,7 @@ class ExpenseReport {
 
     function print_report($expenses) {
         $information = new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->gatherExpenseLines($expenses));
-        $this->printReportInTxtTemp($information);
+        $this->printReportInTxt($information);
     }
 
     private function getExpenseName(Expense $expense): string
@@ -116,7 +116,7 @@ class ExpenseReport {
         return $lines;
     }
 
-    private function printReportInTxtTemp(ExpenseInformation $information): void
+    private function printReportInTxt(ExpenseInformation $information): void
     {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
