@@ -46,11 +46,10 @@ class ExpenseReport {
     private array $expenseLines = [];
 
     function print_report($expenses) {
-        $mealExpenses = $this->getTotalOfMealExpenses($expenses);
         $total = $this->getTotal($expenses);
         $this->gatherExpenseLines($expenses);
-        $information = new ExpenseInformation($mealExpenses, $total, $this->expenseLines);
-        $this->printReportInTxt($mealExpenses, $total);
+        $information = new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $total, $this->expenseLines);
+        $this->printReportInTxt($information->mealExpenses, $total);
     }
 
     private function getExpenseName(Expense $expense): string
