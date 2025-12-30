@@ -125,7 +125,7 @@ class ExpenseReport {
     {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
-        foreach ($this->expenseLines as $expenseLine) {
+        foreach ($lines as $expenseLine) {
             print($expenseLine->expenseName . "\t" . $expenseLine->amount . "\t" . $expenseLine->overExpenseMarker . "\n");
         }
         print("Meal Expenses: " . $mealExpenses . "\n");
