@@ -43,8 +43,6 @@ class ExpenseReport {
     const DINEER_LIMIT = 5000;
     const BREAKFAST_LIMIT = 1000;
 
-    private array $expenseLines = [];
-
     function print_report($expenses) {
         $information = new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->gatherExpenseLines($expenses));
         $this->printReportInTxt($information->mealExpenses, $information->totalExpenses, $information->expenseLines);
@@ -107,11 +105,6 @@ class ExpenseReport {
             $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
 
             $lines[] = new ExpenseLine(
-                $expense,
-                $expenseName,
-                $mealOverExpensesMarker
-            );
-            $this->expenseLines[] = new ExpenseLine(
                 $expense,
                 $expenseName,
                 $mealOverExpensesMarker
