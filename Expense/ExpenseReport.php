@@ -89,7 +89,7 @@ class ExpenseReport {
         return $total;
     }
 
-    private function printAllExpenses($expenses): void
+    private function gatherExpenseLines($expenses): void
     {
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
@@ -100,7 +100,6 @@ class ExpenseReport {
                 $expenseName,
                 $mealOverExpensesMarker
             );
-
         }
     }
 
@@ -108,7 +107,7 @@ class ExpenseReport {
     {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
-        $this->printAllExpenses($expenses);
+        $this->gatherExpenseLines($expenses);
         foreach ($this->expenseLines as $expenseLine) {
             print($expenseLine->expenseName . "\t" . $expenseLine->amount . "\t" . $expenseLine->overExpenseMarker . "\n");
         }
