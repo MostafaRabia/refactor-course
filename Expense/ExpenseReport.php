@@ -17,6 +17,17 @@ class Expense {
     }
 }
 
+class ExpenseInformation {
+    public $mealExpenses;
+    public $totalExpenses;
+    public $expenseLines;
+    function __construct($mealExpenses, $totalExpenses, $expenseLines) {
+        $this->mealExpenses = $mealExpenses;
+        $this->totalExpenses = $totalExpenses;
+        $this->expenseLines = $expenseLines;
+    }
+}
+
 class ExpenseLine {
     public $expenseName;
     public $amount;
