@@ -46,8 +46,7 @@ class ExpenseReport {
     const BREAKFAST_LIMIT = 1000;
 
     function print_report($expenses) {
-        $information = new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->gatherExpenseLines($expenses));
-        $this->printReportInTxt($information);
+        $this->printReportInTxt(new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->gatherExpenseLines($expenses)));
     }
 
     private function getExpenseName(Expense $expense): string
