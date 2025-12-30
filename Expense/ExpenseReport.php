@@ -2,6 +2,8 @@
 
 namespace Expense;
 
+use function date;
+
 abstract class ExpenseType {
     const DINNER = 1;
     const BREAKFAST = 2;
@@ -17,28 +19,110 @@ class Expense {
     }
 }
 
-class ExpenseReport {
-    function print_report($expenses) {
-        $mealExpenses = 0;
-        $total = 0;
-        $date = date("Y-m-d h:i:sa");
-        print("Expense Report {$date}\n");
-        foreach ($expenses as $expense) {
-            if ($expense->type == ExpenseType::DINNER || $expense->type == ExpenseType::BREAKFAST) {
-                $mealExpenses += $expense->amount;
-            }
-            $expenseName = "";
-            switch ($expense->type) {
-                case ExpenseType::DINNER: $expenseName = "Dinner"; break;
-                case ExpenseType::BREAKFAST: $expenseName = "Breakfast"; break;
-                case ExpenseType::CAR_RENTAL: $expenseName = "Car Rental"; break;
-            }
+class ExpenseInformation {
+    public $mealExpenses;
+    public $totalExpenses;
+    public $expenseLines;
+    function __construct($mealExpenses, $totalExpenses, $expenseLines) {
+        $this->mealExpenses = $mealExpenses;
+        $this->totalExpenses = $totalExpenses;
+        $this->expenseLines = $expenseLines;
+    }
+}
 
-            $mealOverExpensesMarker = $expense->type == ExpenseType::DINNER && $expense->amount > 5000 || $expense->type == ExpenseType::BREAKFAST && $expense->amount > 1000 ? "X" : " ";
-            print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
+class ExpenseLine {
+    public $expenseName;
+    public $amount;
+    public $overExpenseMarker;
+    function __construct($expense, $expenseName, $overExpenseMarker) {
+        $this->expenseName = $expenseName;
+        $this->amount = $expense->amount;
+        $this->overExpenseMarker = $overExpenseMarker;
+    }
+}
+
+class ExpenseReport {
+    const DINEER_LIMIT = 5000;
+    const BREAKFAST_LIMIT = 1000;
+
+    function print_report($expenses) {
+        $this->printReportInTxt(new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->getExpenseLines($expenses)));
+    }
+
+    private function getExpenseName(Expense $expense): string
+    {
+        return match ($expense->type) {
+            ExpenseType::DINNER => "Dinner",
+            ExpenseType::BREAKFAST => "Breakfast",
+            ExpenseType::CAR_RENTAL => "Car Rental",
+            default => "",
+        };
+    }
+
+    private function addXIfLimitExceeded(Expense $expense): string
+    {
+        return (
+                $expense->type == ExpenseType::DINNER
+                && $expense->amount > self::DINEER_LIMIT
+            ) || (
+                $expense->type == ExpenseType::BREAKFAST
+                && $expense->amount > self::BREAKFAST_LIMIT
+            )
+            ? "X"
+            : " ";
+    }
+
+    private function getMealExpenses(Expense $expense, int $mealExpenses): int
+    {
+        if (in_array($expense->type, [ExpenseType::DINNER, ExpenseType::BREAKFAST], true)) {
+            $mealExpenses += $expense->amount;
+        }
+        return $mealExpenses;
+    }
+
+    private function getTotalOfMealExpenses($expenses): int
+    {
+        $mealExpenses = 0;
+        foreach ($expenses as $expense) {
+            $mealExpenses = $this->getMealExpenses($expense, $mealExpenses);
+        }
+        return $mealExpenses;
+    }
+
+    private function getTotal($expenses): int
+    {
+        $total = 0;
+        foreach ($expenses as $expense) {
             $total += $expense->amount;
         }
-        print("Meal Expenses: " . $mealExpenses . "\n");
-        print("Total Expenses: " . $total . "\n");
+        return $total;
+    }
+
+    private function getExpenseLines($expenses): array
+    {
+        $lines = [];
+        foreach ($expenses as $expense) {
+            $expenseName = $this->getExpenseName($expense);
+            $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
+
+            $lines[] = new ExpenseLine(
+                $expense,
+                $expenseName,
+                $mealOverExpensesMarker
+            );
+        }
+
+        return $lines;
+    }
+
+    private function printReportInTxt(ExpenseInformation $information): void
+    {
+        $date = date("Y-m-d h:i:sa");
+        print("Expense Report {$date}\n");
+        foreach ($information->expenseLines as $expenseLine) {
+            print($expenseLine->expenseName . "\t" . $expenseLine->amount . "\t" . $expenseLine->overExpenseMarker . "\n");
+        }
+        print("Meal Expenses: " . $information->mealExpenses . "\n");
+        print("Total Expenses: " . $information->totalExpenses . "\n");
     }
 }
