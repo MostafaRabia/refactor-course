@@ -32,6 +32,8 @@ class ExpenseReport {
     const DINEER_LIMIT = 5000;
     const BREAKFAST_LIMIT = 1000;
 
+    private array $expenseLines = [];
+
     function print_report($expenses) {
         $mealExpenses = $this->getTotalOfMealExpenses($expenses);
         $total = $this->getTotal($expenses);
