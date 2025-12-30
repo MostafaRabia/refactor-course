@@ -89,24 +89,19 @@ class ExpenseReport {
         return $total;
     }
 
-    private function print(mixed $expense): void
-    {
-        $expenseName = $this->getExpenseName($expense);
-        $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
-
-        $this->expenseLines[] = new ExpenseLine(
-            $expense,
-            $expenseName,
-            $mealOverExpensesMarker
-        );
-
-        print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
-    }
-
     private function printAllExpenses($expenses): void
     {
         foreach ($expenses as $expense) {
-            $this->print($expense);
+            $expenseName = $this->getExpenseName($expense);
+            $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
+
+            $this->expenseLines[] = new ExpenseLine(
+                $expense,
+                $expenseName,
+                $mealOverExpensesMarker
+            );
+
+            print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
         }
     }
 
