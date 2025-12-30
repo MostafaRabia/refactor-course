@@ -17,6 +17,17 @@ class Expense {
     }
 }
 
+class ExpenseLine {
+    public $expenseName;
+    public $amount;
+    public $overExpenseMarker;
+    function __construct($expense, $expenseName, $overExpenseMarker) {
+        $this->expenseName = $expenseName;
+        $this->amount = $expense->amount;
+        $this->overExpenseMarker = $overExpenseMarker;
+    }
+}
+
 class ExpenseReport {
     const DINEER_LIMIT = 5000;
     const BREAKFAST_LIMIT = 1000;
