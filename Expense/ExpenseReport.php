@@ -49,6 +49,7 @@ class ExpenseReport {
         $mealExpenses = $this->getTotalOfMealExpenses($expenses);
         $total = $this->getTotal($expenses);
         $this->gatherExpenseLines($expenses);
+        $information = new ExpenseInformation($mealExpenses, $total, $this->expenseLines);
         $this->printReportInTxt($mealExpenses, $total);
     }
 
