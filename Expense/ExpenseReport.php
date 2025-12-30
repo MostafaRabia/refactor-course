@@ -101,7 +101,6 @@ class ExpenseReport {
                 $mealOverExpensesMarker
             );
 
-            print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
         }
     }
 
@@ -110,6 +109,9 @@ class ExpenseReport {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
         $this->printAllExpenses($expenses);
+        foreach ($this->expenseLines as $expenseLine) {
+            print($expenseLine->expenseName . "\t" . $expenseLine->amount . "\t" . $expenseLine->overExpenseMarker . "\n");
+        }
         print("Meal Expenses: " . $mealExpenses . "\n");
         print("Total Expenses: " . $total . "\n");
     }
