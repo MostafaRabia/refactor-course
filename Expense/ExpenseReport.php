@@ -94,6 +94,12 @@ class ExpenseReport {
         $expenseName = $this->getExpenseName($expense);
         $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
 
+        $this->expenseLines[] = new ExpenseLine(
+            $expense,
+            $expenseName,
+            $mealOverExpensesMarker
+        );
+
         print($expenseName . "\t" . $expense->amount . "\t" . $mealOverExpensesMarker . "\n");
     }
 
