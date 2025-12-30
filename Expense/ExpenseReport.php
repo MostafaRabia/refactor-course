@@ -2,6 +2,8 @@
 
 namespace Expense;
 
+use function date;
+
 abstract class ExpenseType {
     const DINNER = 1;
     const BREAKFAST = 2;
@@ -114,19 +116,14 @@ class ExpenseReport {
         return $lines;
     }
 
-    private function printReportInTxt(int $mealExpenses, int $total, array $lines): void
+    private function printReportInTxtTemp(ExpenseInformation $information): void
     {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
-        foreach ($lines as $expenseLine) {
+        foreach ($information->expenseLines as $expenseLine) {
             print($expenseLine->expenseName . "\t" . $expenseLine->amount . "\t" . $expenseLine->overExpenseMarker . "\n");
         }
-        print("Meal Expenses: " . $mealExpenses . "\n");
-        print("Total Expenses: " . $total . "\n");
-    }
-
-    private function printReportInTxtTemp(ExpenseInformation $information): void
-    {
-        $this->printReportInTxt($information->mealExpenses, $information->totalExpenses, $information->expenseLines);
+        print("Meal Expenses: " . $information->mealExpenses . "\n");
+        print("Total Expenses: " . $information->totalExpenses . "\n");
     }
 }
