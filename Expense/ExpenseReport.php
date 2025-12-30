@@ -100,18 +100,26 @@ class ExpenseReport {
         return $total;
     }
 
-    private function gatherExpenseLines($expenses): void
+    private function gatherExpenseLines($expenses): array
     {
+        $lines = [];
         foreach ($expenses as $expense) {
             $expenseName = $this->getExpenseName($expense);
             $mealOverExpensesMarker = $this->addXIfLimitExceeded($expense);
 
+            $lines[] = new ExpenseLine(
+                $expense,
+                $expenseName,
+                $mealOverExpensesMarker
+            );
             $this->expenseLines[] = new ExpenseLine(
                 $expense,
                 $expenseName,
                 $mealOverExpensesMarker
             );
         }
+
+        return $lines;
     }
 
     private function printReportInTxt(int $mealExpenses, int $total): void
