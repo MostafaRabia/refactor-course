@@ -38,7 +38,7 @@ class ExpenseReport {
         $mealExpenses = $this->getTotalOfMealExpenses($expenses);
         $total = $this->getTotal($expenses);
         $this->gatherExpenseLines($expenses);
-        $this->printReportInTxt($expenses, $mealExpenses, $total);
+        $this->printReportInTxt($mealExpenses, $total);
     }
 
     private function getExpenseName(Expense $expense): string
@@ -104,7 +104,7 @@ class ExpenseReport {
         }
     }
 
-    private function printReportInTxt($expenses, int $mealExpenses, int $total): void
+    private function printReportInTxt(int $mealExpenses, int $total): void
     {
         $date = date("Y-m-d h:i:sa");
         print("Expense Report {$date}\n");
