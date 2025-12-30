@@ -46,8 +46,7 @@ class ExpenseReport {
     private array $expenseLines = [];
 
     function print_report($expenses) {
-        $this->gatherExpenseLines($expenses);
-        $information = new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->expenseLines);
+        $information = new ExpenseInformation($this->getTotalOfMealExpenses($expenses), $this->getTotal($expenses), $this->gatherExpenseLines($expenses));
         $this->printReportInTxt($information->mealExpenses, $information->totalExpenses);
     }
 
